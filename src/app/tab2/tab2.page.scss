@@ -1,0 +1,23 @@
+ion-fab {
+    color: #fff;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+  
+  .complementaria{
+    filter: grayscale(100%);
+  }
+
+  ion-tab-bar {
+    overflow: auto;
+}
+
+ion-header {
+    display: block;
+    position: relative;
+    -ms-flex-order: -1;
+    order: -1;
+    width: 100%;
+    z-index: 10;
+}
