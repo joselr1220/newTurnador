@@ -17,4 +17,10 @@
   <ion-label><strong>FECHA ACTUAL:</strong> Prueba</ion-label>
 </div>
 
+<ion-button color="primary" (click)="getVendedores()">Primary</ion-button>
+  <div *ngFor="let item of nombres">
+    <span>
+      {{item.NOMBRE}} 
+    </span>
+  </div>
 </ion-content>

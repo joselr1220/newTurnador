@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TurnadorService } from '../turnador/turnador.service';
 
 @Component({
   selector: 'app-tab2',
@@ -6,7 +7,24 @@ import { Component } from '@angular/core';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
+  
+  nombres:any;
 
-  constructor() {}
+  constructor(
+    private httpTurnador: TurnadorService
+  ) {}
+
+    getVendedores(){
+      this.httpTurnador.TraerVendedores().subscribe(
+        resp => {
+          this.nombres = resp;
+          console.log(this.nombres);
+        },
+        error => {
+          console.log(error);
+        }
+      ); 
+    }
+
 
 }
