@@ -1,0 +1,7 @@
+{
+  "name": "newTurnador",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
