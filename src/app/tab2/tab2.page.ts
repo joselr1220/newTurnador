@@ -7,14 +7,18 @@ import { TurnadorService } from '../turnador/turnador.service';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
-  
   nombres:any;
+
 
   constructor(
     private httpTurnador: TurnadorService
   ) {}
 
-    getVendedores(){
+  ngOnInit() {
+    this.getVendedores();
+  }
+
+    async getVendedores(){
       this.httpTurnador.TraerVendedores().subscribe(
         resp => {
           this.nombres = resp;
@@ -24,6 +28,14 @@ export class Tab2Page {
           console.log(error);
         }
       ); 
+    }
+
+    gestionarTurno(){
+      //aqui va el código que actualiza los turnos
+      // this.httpTurnador.gestionarTurno(agencia, estado, vendedor);
+
+      //traigo nuevamente los vendedores y sus posiciones
+      this.getVendedores();
     }
 
 

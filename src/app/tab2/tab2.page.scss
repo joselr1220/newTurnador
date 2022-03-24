@@ -5,19 +5,53 @@ ion-fab {
     right: 0px;
   }
   
-  .complementaria{
-    filter: grayscale(100%);
-  }
+  // .complementaria{
+  //   filter: grayscale(100%);
+  // }
 
   ion-tab-bar {
     overflow: auto;
 }
 
 ion-header {
-    display: block;
+    // display: block;
     position: relative;
     -ms-flex-order: -1;
     order: -1;
     width: 100%;
     z-index: 10;
+}
+
+.icon-check{
+  left: 30px;
+  top: 206px;
+  right: 200;
+  width: 30px;
+}
+
+.icon-circle{
+  // display: block;
+  width: 37px;
+  height: 100%;
+  object-fit: inherit;
+  object-position: inherit;
+}
+
+.container-text-name{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+ 
+}
+
+.ion-label-name{
+  width: 66%;
+    margin-left: 13px;
+    font-size: 12px;
+}
+
+.container-principal-card{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
