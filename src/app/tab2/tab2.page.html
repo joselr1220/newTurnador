@@ -5,7 +5,7 @@
       Gestor
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="PopoverMenu($event)">
+      <ion-button >
         <ion-icon slot="icon-only" name="menu"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -17,10 +17,25 @@
   <ion-label><strong>FECHA ACTUAL:</strong> Prueba</ion-label>
 </div>
 
-<ion-button color="primary" (click)="getVendedores()">Primary</ion-button>
+<!-- <ion-button color="primary" (click)="getVendedores()">Primary</ion-button>  -->
   <div *ngFor="let item of nombres">
-    <span>
-      {{item.NOMBRE}} 
-    </span>
+    <ion-card >    
+      <ion-card-content class="container-principal-card" >
+        <div class="container-text-name">
+            
+          <ion-img class="icon-circle" *ngIf="item.ESTADO == 1" src="/assets/icon/circle-amarilla.png"></ion-img>
+          <ion-img class="icon-circle" *ngIf="item.ESTADO == 0" src="/assets/icon/circle-gris.png"></ion-img>
+          <ion-img class="icon-circle" *ngIf="item.ESTADO == 2" src="/assets/icon/circle-red.png"></ion-img>
+          <ion-img class="icon-circle" *ngIf="item.ESTADO == 3" src="/assets/icon/circle-verde.png"></ion-img>
+          <ion-label class="ion-label-name"> {{item.NOMBRE}}</ion-label>
+        </div>
+
+          <ion-img class="icon-check" *ngIf="item.ESTADO == 1" src="/assets/icon/next.png" ></ion-img>
+          <ion-img class="icon-check" *ngIf="item.ESTADO == 0" src="/assets/icon/check.png" ></ion-img>
+          <ion-img class="icon-check" *ngIf="item.ESTADO == 2" src="/assets/icon/next.png" ></ion-img>
+          <ion-img class="icon-check" *ngIf="item.ESTADO == 3" src="/assets/icon/next.png" ></ion-img>
+
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>

@@ -16,4 +16,8 @@ export class TurnadorService {
       return this.http.get(`${this.variables.dirLocal}/${this.variables.c_emp}/turnos`);
     }
 
+    gestionarTurno(agencia, estado, vendedor){
+      return this.http.get(`${this.variables.dirLocal}/${this.variables.c_emp}/gestionar/${agencia}/${estado}/${vendedor}`);
+    }
+
 }
