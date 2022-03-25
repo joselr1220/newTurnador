@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, NavController, Platform, ToastController } from '@ionic/angular';
+import { Globals } from 'src/app/Globals/globals';
 import { User } from 'src/app/models/User';
 import { LoginService } from 'src/app/services/Authentication/loginService';
 
@@ -17,7 +18,8 @@ export class LoginPage implements OnInit {
     public loadingController: LoadingController,
     private httpLogin: LoginService,
     public nav: NavController,
-    private platform: Platform) {
+    private platform: Platform,
+    public globals: Globals) {
     
    }
 
@@ -71,6 +73,8 @@ export class LoginPage implements OnInit {
     this.httpLogin.login(user).subscribe(
       (res: any) => {
         console.log(res)
+        this.globals.agencia = res.data.usuario.C_AGE_TRABAJO;
+        this.globals.setAgencia(res.data.usuario.C_AGE_TRABAJO);
         if (res.success){
           let rol = res.data.roles.map(roles =>{
             return roles.DESCRIPCION_ROL

@@ -1,4 +1,6 @@
 export class Variables {
+
+    public digiturno = 'https://rtsycwvb4g'
   
     //AWS Turnador prd
     // public MEC_EXTENSION_COMVE = 'https://rtsycwvb4g'
