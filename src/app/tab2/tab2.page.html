@@ -23,18 +23,21 @@
       <ion-card-content class="container-principal-card" >
         <div class="container-text-name">
             
-          <ion-img class="icon-circle" *ngIf="item.ESTADO == 1" src="/assets/icon/circle-amarilla.png"></ion-img>
           <ion-img class="icon-circle" *ngIf="item.ESTADO == 0" src="/assets/icon/circle-gris.png"></ion-img>
+          <ion-img class="icon-circle" *ngIf="item.ESTADO == 1" src="/assets/icon/circle-verde.png"></ion-img>
           <ion-img class="icon-circle" *ngIf="item.ESTADO == 2" src="/assets/icon/circle-red.png"></ion-img>
-          <ion-img class="icon-circle" *ngIf="item.ESTADO == 3" src="/assets/icon/circle-verde.png"></ion-img>
+          <ion-img class="icon-circle" *ngIf="item.ESTADO == 3" src="/assets/icon/circle-amarilla.png"></ion-img>
           <ion-label class="ion-label-name"> {{item.NOMBRE}}</ion-label>
         </div>
-
-          <ion-img class="icon-check" *ngIf="item.ESTADO == 1" src="/assets/icon/next.png" ></ion-img>
-          <ion-img class="icon-check" *ngIf="item.ESTADO == 0" src="/assets/icon/check.png" ></ion-img>
-          <ion-img class="icon-check" *ngIf="item.ESTADO == 2" src="/assets/icon/next.png" ></ion-img>
-          <ion-img class="icon-check" *ngIf="item.ESTADO == 3" src="/assets/icon/next.png" ></ion-img>
-
+      <div class="container-text-name">
+        <ion-img class="icon-circle-hibernate" *ngIf="item.ESTADO == 1" src="/assets/icon/stop.png" (click)="gestionarTurno(0,'XX', item.ESTADO, item.N_IDE)"></ion-img>
+        <ion-img class="icon-check" *ngIf="item.ESTADO == 0" src="/assets/icon/check.png" (click)="gestionarTurno(1,'XX', item.ESTADO, item.N_IDE)" ></ion-img>
+        <ion-img class="icon-check" *ngIf="item.ESTADO == 1" src="/assets/icon/next.png" (click)="gestionarTurno(1, 'XX', item.ESTADO, item.N_IDE)" ></ion-img>
+        <ion-img class="icon-check" *ngIf="item.ESTADO == 2" src="/assets/icon/next.png" (click)="gestionarTurno(1, 'XX', item.ESTADO, item.N_IDE)" ></ion-img>
+        <ion-img class="icon-check" *ngIf="item.ESTADO == 3" src="/assets/icon/next.png" (click)="gestionarTurno(1,'XX', item.ESTADO, item.N_IDE)" ></ion-img>
+      </div>
+        
+         
       </ion-card-content>
     </ion-card>
   </div>
