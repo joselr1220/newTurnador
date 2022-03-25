@@ -30,12 +30,41 @@ export class Tab2Page {
       ); 
     }
 
-    gestionarTurno(){
+    async gestionarTurno(tipoBoton, agencia, estado, numIde){
       //aqui va el código que actualiza los turnos
-      // this.httpTurnador.gestionarTurno(agencia, estado, vendedor);
-
+      if(tipoBoton == 0 && estado == 1){
+        estado = 'HIBERNAR';
+    
+      }
+      else if(tipoBoton == 1){
+        if(estado == 0){
+          estado = 'TURNO';
+        }
+        if(estado == 1){
+            estado = 'ATENCION';
+        }
+        if(estado == 2){
+          estado = 'TURNO';
+        }
+        if(estado == 3){
+            estado = 'TURNO';
+        }
+      }
+     
+     
+      this.httpTurnador.gestionarTurno(agencia, estado, numIde).subscribe(
+        respuesta => {
+          this.nombres = respuesta;
+          console.log('Turno gestionado');
+          this.getVendedores();
+        },
+        error => {
+          console.log(error);
+        }
+      )
+      
       //traigo nuevamente los vendedores y sus posiciones
-      this.getVendedores();
+     
     }
 
 
