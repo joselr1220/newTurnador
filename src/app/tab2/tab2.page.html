@@ -1,18 +1,20 @@
-<ion-content [fullscreen]="true">
+<ion-content>
 <ion-header>
   <ion-toolbar color="danger">
     <ion-title>
-      Gestor
+      En Atención
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button >
+      <ion-button (click)="PopoverMenu($event)">
         <ion-icon slot="icon-only" name="menu"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
-
+<!-- 
+<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher> -->
 
 <div class="ion-padding">
   <ion-label><strong>SEMAFORISTA:</strong> {{usuario}}</ion-label> <br>

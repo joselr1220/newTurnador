@@ -23,4 +23,28 @@ export class Globals{
       getUsuarioApli(): any {
         return JSON.parse(localStorage.getItem('usuario'));
       }
+
+      setToken(token) {
+        localStorage.setItem('token', JSON.stringify( token));
+      }
+    
+      getToken(): any {
+        return JSON.parse(localStorage.getItem('token'));
+      }
+
+      setRol(rol) {
+        localStorage.setItem('rol', JSON.stringify(rol));
+      }
+    
+      getRol(): any {
+        return JSON.parse(localStorage.getItem('rol'));
+      }
+
+      setLogueado(logueo) {
+        localStorage.setItem('logueo', JSON.stringify(logueo));
+      }
+    
+      getLogueado(): any {
+        return JSON.parse(localStorage.getItem('logueo'));
+      }
 }

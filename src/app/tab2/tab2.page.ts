@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, PopoverController } from '@ionic/angular';
 import { Globals } from '../Globals/globals';
+import { EnvService } from '../services/env/env.service';
 import { TurnadorService } from '../turnador/turnador.service';
+import { MenuAdminComponent } from 'src/app/components/popover/menu-admin/menu-admin/menu-admin.component';
+import { MenuRegistroComponent } from 'src/app/components/popover/menu-registro/menu-registro.component';
 
 @Component({
   selector: 'app-tab2',
@@ -11,15 +14,19 @@ import { TurnadorService } from '../turnador/turnador.service';
 export class Tab2Page {
   nombres:any;
   usuario: string;
+  rol: string;
   public agencia: string;
   hora_actual: string;
   fechaActual: Date = new Date();
   constructor(
     private httpTurnador: TurnadorService,
     public alertController: AlertController,
+    public popoverController: PopoverController,
+    private httpEnv: EnvService,    
     public globals: Globals) {
       this.agencia = this.globals.getAgencia();
       this.usuario = this.globals.getUsuarioApli();
+      this.rol = this.globals.getRol();
     }
 
   ngOnInit() {
@@ -27,7 +34,22 @@ export class Tab2Page {
     this.calcularHora();
   }
 
-  
+  //   doRefresh(event) {
+  //   setTimeout(() => {
+  //     this.getToken();
+  //     event.target.complete();
+  //   }, 2000);
+  // }
+
+  // getToken() {
+  //   this.httpEnv.getStorageToken().then(
+  //     // () => {
+  //     //   this.rol = this.httpEnv.rol_admin
+  //     //   this.age_trabajo = this.httpEnv.agencia;
+  //     //   this.usuario_creacion = this.httpEnv.usuarioAplicativo;
+  //       // this.getVendEnAtencion(this.httpEnv.agencia);
+  //    );
+  // }
 
   calcularHora() {
     setTimeout(() => {
@@ -212,5 +234,13 @@ export class Tab2Page {
       }
     }
 
+    async PopoverMenu(ev: any) {
+      const popover = await this.popoverController.create({
+        
+        component: this.rol ? MenuAdminComponent : MenuRegistroComponent,
+        event: ev
+      });
+      return await popover.present();
+    }
 
 }

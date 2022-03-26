@@ -4,6 +4,7 @@ import { tap } from  'rxjs/operators';
 import { Observable, BehaviorSubject } from  'rxjs';
 
 import { EnvService } from '../env/env.service';
+import { Globals } from 'src/app/Globals/globals';
 
 
 @Injectable({
@@ -15,7 +16,8 @@ export class LoginService {
 
   constructor(
     private  http: HttpClient, 
-    private httpEnv: EnvService
+    private httpEnv: EnvService,
+    public globals: Globals
   ) { }
 
   login(params) {
@@ -47,7 +49,7 @@ export class LoginService {
 
   async logout() { 
     //this.storage.remove("token");
-    this.isLogueado = false;
+    this.globals.setLogueado(false);
     delete this.token;
   }
 
