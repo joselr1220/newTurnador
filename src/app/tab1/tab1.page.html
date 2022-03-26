@@ -1,17 +1,67 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Inicio
-    </ion-title>
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-title> Consultas </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="PopoverMenu($event)">
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Inicio</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  
+    <div class="encabezado" style="text-align: center">
+  <img class="imacredito" src="../../assets/icon/Capa 2.svg" />
+  <h1 class="mensajeBienvenida">Bienvendo al generador de Turno!</h1>
+    <h5 class="mensajeG">Para generar el turno presione en generar turno</h5>
+  </div>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <div style="text-align: center" class="labelBtnGenerar" (click)="irDigiturno()">
+    <button ion-button class="generarTurno" >Generar Turno</button>
+  </div>
+
 </ion-content>
+
+
+<!-- <ion-content [fullscreen]="false">
+  <ion-tabs>
+
+    <ion-tab-bar slot="bottom" class="ion-margin-start ion-padding-start">
+  
+      <ion-tab-button (click)="tab5()">
+        <ion-icon name="home"></ion-icon>  
+        <ion-label>Inicio</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button (click)="tab1()">
+        <ion-icon name="checkbox"></ion-icon>
+        <ion-label>Registro</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button (click)="tab2()">
+        <ion-icon name="list" mode="ios"></ion-icon>
+        <ion-label>Turnos</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button (click)="atencion()">
+        <ion-icon name="contacts"></ion-icon>
+        <ion-label>En Atencion</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button (click)="informacion()">
+        <ion-icon name="information-circle"></ion-icon>
+        <ion-label>Informacion</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button (click)="kanban()">
+        <ion-icon name="alarm"></ion-icon>
+        <ion-label>Kanban</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  
+  </ion-tabs>
+
+
+</ion-content> -->
+  

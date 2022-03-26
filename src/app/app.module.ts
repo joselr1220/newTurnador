@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { TurnadorService } from './turnador/turnador.service';
 import { HttpClientModule } from '@angular/common/http';
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -17,3 +18,4 @@ import { HttpClientModule } from '@angular/common/http';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+ 

@@ -12,8 +12,8 @@ export class TurnadorService {
     private variables: Variables
   ) { }
 
-    TraerVendedores(){
-      return this.http.get(`${this.variables.dirLocal}/${this.variables.c_emp}/turnos`);
+    TraerVendedores(agencia){
+      return this.http.get(`${this.variables.dirLocal}/${this.variables.c_emp}/turnos/${agencia}`);
     }
 
     gestionarTurno(agencia, estado, vendedor){
