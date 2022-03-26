@@ -66,6 +66,7 @@ rol =  this.httpEnv.rol_admin;
       const urlcaja: string= `http://10.1.0.135:8840/Player.aspx?Recurso=TouchJamar&IdOficina=${this.idOficina}&IdSelector=${this.idSelector}&IdSala=${this.idSala}&fullscreen=1`;
       console.log('Entrando al digiturno')
       console.log('Este es el valor del credito caja: ', this.credito_caja)
+      location.href = urlRedirect;
       if(this.idOficina == null){
         this.Espere();
         console.log('Cargando')
@@ -76,7 +77,7 @@ rol =  this.httpEnv.rol_admin;
       }
       
       console.log('Url', urlRedirect) 
-    };
+    }
         
   private cargarDatos() {
     console.log(this.httpEnv.agencia);

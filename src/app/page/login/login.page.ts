@@ -20,7 +20,7 @@ export class LoginPage implements OnInit {
     public nav: NavController,
     private platform: Platform,
     public globals: Globals) {
-    
+     
    }
 
   ionViewWillEnter() {
@@ -34,6 +34,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     //this.getUser();
+
   }
 
  /*  ionViewWillEnter() {
@@ -75,6 +76,7 @@ export class LoginPage implements OnInit {
         console.log(res)
         this.globals.agencia = res.data.usuario.C_AGE_TRABAJO;
         this.globals.setAgencia(res.data.usuario.C_AGE_TRABAJO);
+        this.globals.setUsuarioApli(res.data.usuario.USUARIO_APLICATIVO);
         if (res.success){
           let rol = res.data.roles.map(roles =>{
             return roles.DESCRIPCION_ROL
