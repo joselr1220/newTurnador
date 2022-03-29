@@ -79,10 +79,10 @@ export class LoginPage implements OnInit {
     this.httpLogin.login(user).subscribe(
       (res: any) => {
         console.log(res)
-        this.globals.agencia = res.data.usuario.C_AGE_TRABAJO;
-        this.globals.setAgencia(res.data.usuario.C_AGE_TRABAJO);
-        this.globals.setUsuarioApli(res.data.usuario.USUARIO_APLICATIVO);
-        this.globals.setToken(res.token);
+        this.globals.agencia = res?.data?.usuario?.C_AGE_TRABAJO;
+        this.globals.setAgencia(res?.data?.usuario?.C_AGE_TRABAJO);
+        this.globals.setUsuarioApli(res?.data?.usuario?.USUARIO_APLICATIVO);
+        this.globals.setToken(res?.token);
         this.globals.setLogueado(true);
         if (res.success){
           let rol = res.data.roles.map(roles =>{
