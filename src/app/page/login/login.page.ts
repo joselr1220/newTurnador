@@ -79,6 +79,7 @@ export class LoginPage implements OnInit {
     this.httpLogin.login(user).subscribe(
       (res: any) => {
         console.log(res)
+        
         this.globals.agencia = res?.data?.usuario?.C_AGE_TRABAJO;
         this.globals.setAgencia(res?.data?.usuario?.C_AGE_TRABAJO);
         this.globals.setUsuarioApli(res?.data?.usuario?.USUARIO_APLICATIVO);
@@ -108,7 +109,7 @@ export class LoginPage implements OnInit {
           } 
 
           if (!this.rolSemaforista){
-            this.Toast("El usuario "+res.data.usuario.NOMBRE_USUARIO+" no tiene acceso por que no tiene el rol de SEMAFORISTA");
+            this.Toast("El usuario "+res.data.usuario.NOMBRE_USUARIO+" no tiene acceso porque no tiene el rol de SEMAFORISTA");
             loading.dismiss();
           }
 

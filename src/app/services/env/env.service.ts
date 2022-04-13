@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { UserResponse } from 'src/app/models/Authentication/user-response';
 import { ToastController } from '@ionic/angular';
 
 @Injectable({
@@ -12,12 +11,6 @@ export class EnvService {
   SERVER_URL_QAS = "https://appsprd.mueblesjamar.com.co/";
   SERVER_URL_DEV = "http://appsprd.mueblesjamar.com.co/";
   API_KEY = "d47c29cfdf8e2456ac678c51f9e4ddfa8ec577f64e98aa9e863399f6a10210d4";
-
- //CONSTANTES DEV
-//  SERVER_URL_PRD = "https://appsdev.mueblesjamar.com.co/";
-//  SERVER_URL_QAS = "https://appsdev.mueblesjamar.com.co/";
-//  SERVER_URL_DEV = "http://appsdev.mueblesjamar.com.co/";
-//  API_KEY = "d47c29cfdf8e2456ac678c51f9e4ddfa8ec577f64e98aa9e863399f6a10210d4";
 
 
   //VARIABLES
