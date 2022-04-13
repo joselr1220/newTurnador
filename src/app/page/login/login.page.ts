@@ -13,6 +13,7 @@ export class LoginPage implements OnInit {
 
   rolSemaforista: boolean = false;
   user: User = new User();
+  logueo: boolean;
   constructor(
     public toastController: ToastController,
     public loadingController: LoadingController,
@@ -20,7 +21,7 @@ export class LoginPage implements OnInit {
     public nav: NavController,
     private platform: Platform,
     public globals: Globals) {
-     
+     this.logueo = this.globals.getLogueado();
    }
 
   ionViewWillEnter() {
@@ -34,7 +35,11 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     //this.getUser();
-
+     if(this.logueo == true){
+      this.nav.navigateRoot('/tabs/tab2');
+     }else{
+      this.nav.navigateRoot('');
+     }
   }
 
  /*  ionViewWillEnter() {
@@ -74,9 +79,12 @@ export class LoginPage implements OnInit {
     this.httpLogin.login(user).subscribe(
       (res: any) => {
         console.log(res)
-        this.globals.agencia = res.data.usuario.C_AGE_TRABAJO;
-        this.globals.setAgencia(res.data.usuario.C_AGE_TRABAJO);
-        this.globals.setUsuarioApli(res.data.usuario.USUARIO_APLICATIVO);
+        
+        this.globals.agencia = res?.data?.usuario?.C_AGE_TRABAJO;
+        this.globals.setAgencia(res?.data?.usuario?.C_AGE_TRABAJO);
+        this.globals.setUsuarioApli(res?.data?.usuario?.USUARIO_APLICATIVO);
+        this.globals.setToken(res?.token);
+        this.globals.setLogueado(true);
         if (res.success){
           let rol = res.data.roles.map(roles =>{
             return roles.DESCRIPCION_ROL
@@ -91,9 +99,9 @@ export class LoginPage implements OnInit {
               console.log('ADMIN TRN TRIBAL');
               if (this.platform.is('desktop')) {
                 console.log('NAVEGADOR')
-                this.nav.navigateRoot('/kanban-web');
+                this.nav.navigateRoot('/tabs/tab2');
               }else{
-                this.nav.navigateRoot('/tabs');
+                this.nav.navigateRoot('/tabs/tab2');
               }
               return
             }
@@ -101,7 +109,7 @@ export class LoginPage implements OnInit {
           } 
 
           if (!this.rolSemaforista){
-            this.Toast("El usuario "+res.data.usuario.NOMBRE_USUARIO+" no tiene acceso por que no tiene el rol de SEMAFORISTA");
+            this.Toast("El usuario "+res.data.usuario.NOMBRE_USUARIO+" no tiene acceso porque no tiene el rol de SEMAFORISTA");
             loading.dismiss();
           }
 
@@ -121,10 +129,11 @@ export class LoginPage implements OnInit {
             this.Toast("Usted no tiene acceso a la vista web");
             return
           }
-          this.nav.navigateRoot('/tabs');
+          this.nav.navigateRoot('/tabs/tab2');
         }
       }
     )
 
   }
+
 }

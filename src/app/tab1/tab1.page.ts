@@ -5,8 +5,8 @@ import { EnvService } from '../services/env/env.service';
 import { IntegracionDigiturnoService } from '../services/integracionDigiturno/integracion-digiturno.service'
 import { AlertController, PopoverController, ToastController, LoadingController, Platform, NavController } from '@ionic/angular';
 import { Globals } from '../Globals/globals';
-// import { MenuAdminComponent } from '../components/popover/menu-admin/menu-admin/menu-admin.component';
-// import { MenuRegistroComponent } from '../components/popover/menu-registro/menu-registro.component';
+import { MenuAdminComponent } from 'src/app/components/popover/menu-admin/menu-admin/menu-admin.component';
+import { MenuRegistroComponent } from 'src/app/components/popover/menu-registro/menu-registro.component';
 
 @Component({
   selector: 'app-tab1',
@@ -126,6 +126,15 @@ rol =  this.httpEnv.rol_admin;
 
     kanban(){
       this.router.navigate(['tabs/kanban'])
+    }
+
+    async PopoverMenu(ev: any) {
+      const popover = await this.popoverController.create({
+        
+        component: this.rol ? MenuAdminComponent : MenuRegistroComponent,
+        event: ev
+      });
+      return await popover.present();
     }
 
 
