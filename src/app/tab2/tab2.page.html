@@ -2,7 +2,7 @@
 <ion-header>
   <ion-toolbar color="danger">
     <ion-title>
-      En Atención
+      Turnador
     </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="PopoverMenu($event)">
@@ -16,9 +16,14 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher> -->
 
-<div class="ion-padding">
-  <ion-label><strong>SEMAFORISTA:</strong> {{usuario}}</ion-label> <br>
-  <ion-label><strong>FECHA ACTUAL: </strong>{{fechaActual | date:"dd/MM/yyyy"}} {{hora_actual}}</ion-label>
+<div class="container-principal-tab2">
+
+  <div class="align-items-column">
+    <ion-label><strong>SEMAFORISTA:</strong> {{usuario}}</ion-label> <br>
+    
+    <ion-label><strong>FECHA ACTUAL: </strong>{{fechaActual | date:"dd/MM/yyyy"}} {{hora_actual}}</ion-label>
+  </div>
+  <ion-img src="/assets/icon/question.png" class="size-img-question" (click)="openModal()"></ion-img>
 </div>
 
 <!-- <ion-button color="primary" (click)="getVendedores()">Primary</ion-button>  -->
@@ -47,4 +52,25 @@
       </ion-card-content>
     </ion-card>
   </div>
-</ion-content>
+
+<ng-container *ngIf="isModalOpen" class="example-boundary" >
+  
+    <div class="card"  cdkDragBoundary="example-boundary"cdkDrag> 
+ 
+      <div class="img-close">
+        <ion-img class="close-size" (click)="dismissModal()" src="/assets/icon/close.png"></ion-img>
+      </div> 
+       <div>
+         <div class="align-items-row" *ngFor="let item of itemsMenu">
+           <ion-img class="icon-circle" [src]="item.url"></ion-img>
+           <ion-label>{{item.text}}</ion-label>
+         </div>
+       </div>
+       
+     </div>
+
+   
+      
+  
+</ng-container>
+

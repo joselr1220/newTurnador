@@ -9,12 +9,14 @@ import { AppComponent } from './app.component';
 import { TurnadorService } from './turnador/turnador.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Globals } from './Globals/globals';
+import { MenuRegistroComponent } from './components/popover/menu-registro/menu-registro.component';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, MenuRegistroComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,],
+  imports: [CommonModule,BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
   providers: [TurnadorService, Variables, Globals, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy}],
   bootstrap: [AppComponent],
 })

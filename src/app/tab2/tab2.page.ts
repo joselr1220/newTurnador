@@ -1,33 +1,57 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AlertController, PopoverController } from '@ionic/angular';
 import { Globals } from '../Globals/globals';
 import { EnvService } from '../services/env/env.service';
 import { TurnadorService } from '../turnador/turnador.service';
 import { MenuAdminComponent } from 'src/app/components/popover/menu-admin/menu-admin/menu-admin.component';
 import { MenuRegistroComponent } from 'src/app/components/popover/menu-registro/menu-registro.component';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+  styleUrls: ['tab2.page.scss'],
 })
 export class Tab2Page {
-  nombres:any;
+ 
+  isModalOpen: boolean = false;
+  nombres: any;
   usuario: string;
   rol: string;
   public agencia: string;
   hora_actual: string;
+  itemsMenu: any[] = [
+    {
+      text: 'No ha llegado',
+      url: '/assets/icon/circle-gris.png',
+    },
+    {
+      text: 'Disponible',
+      url: '/assets/icon/circle-verde.png',
+    },
+   
+    {
+      text: 'En turno',
+      url: '/assets/icon/circle-amarilla.png',
+    },
+    {
+      text: 'Hibernando',
+      url: '/assets/icon/circle-red.png',
+    }
+  ];
   fechaActual: Date = new Date();
   constructor(
     private httpTurnador: TurnadorService,
     public alertController: AlertController,
     public popoverController: PopoverController,
-    private httpEnv: EnvService,    
-    public globals: Globals) {
-      this.agencia = this.globals.getAgencia();
-      this.usuario = this.globals.getUsuarioApli();
-      this.rol = this.globals.getRol();
-    }
+    private httpEnv: EnvService,
+    public globals: Globals, 
+    private loading: LoadingController
+  ) {
+    this.agencia = this.globals.getAgencia();
+    this.usuario = this.globals.getUsuarioApli();
+    this.rol = this.globals.getRol();
+  }
 
   ngOnInit() {
     this.getVendedores();
@@ -58,189 +82,200 @@ export class Tab2Page {
     }, 1000);
   }
 
-    async getVendedores(){
-      this.httpTurnador.TraerVendedores(this.agencia).subscribe(
-        resp => {
-          this.nombres = resp;
-          console.log(this.nombres);
-        },
-        error => {
-          console.log(error);
-        }
-      ); 
-    }
+  async getVendedores() {
+    const loading = await this.loading.create({
+      message: 'Cargando'
+    });
+    loading.present();
 
-    async gestionarTurno(tipoBoton, agencia, estado, numIde, nombre){
-      //aqui va el código que actualiza los turnos
-      if(tipoBoton == 0 && estado == 1){
-        estado = 'HIBERNAR';
-    
+    this.httpTurnador.TraerVendedores(this.agencia).subscribe(
+      (resp) => {
+        this.nombres = resp;
+        loading.dismiss();
+        console.log(this.nombres);
+      },
+      (error) => {
+        loading.dismiss();
+        console.log(error);
       }
-      else if(tipoBoton == 1){
-        if(estado == null){
-          estado = 'TURNO';
-        }
-        if(estado == 0){
-          estado = 'TURNO';
-        }
-        if(estado == 1){
-            estado = 'ATENCION';
-        }
-        if(estado == 2){
-          estado = 'TURNO';
-        }
-        if(estado == 3){
-            estado = 'TURNO';
-        }
-      }
+    );
      
-     
-      this.httpTurnador.gestionarTurno(agencia, estado, numIde).subscribe(
-        respuesta => {
-          this.nombres = respuesta;
-          console.log('Turno gestionado');
-          this.getVendedores();
-        },
-        error => {
-          console.log(error);
-        }
-      )
-      
-      //traigo nuevamente los vendedores y sus posiciones
-     
-    }
+  }
 
-    async iniciarTurno(tipoBoton, agencia, estado, numIde, nombre) {
-      if (tipoBoton === 0 && estado == 1){
-        const alert = await this.alertController.create({
-          header: "Iniciar Hibernación!",
-          message: "Desea hibernar a " + nombre + "?",
-          mode: "ios",
-          cssClass: "css_alert",
-          buttons: [
-            {
-              text: "No",
-              role: "cancel",
-              cssClass: "secondary",
-              handler: (blah) => {
-                console.log("Confirm Cancel: blah");
-              },
-            },
-            {
-              text: "Si",
-              handler: () => {
-                this. gestionarTurno(tipoBoton, agencia, estado, numIde, nombre);
-              },
-            },
-          ],
-        });
-        await alert.present();
-      }else if(tipoBoton === 1 && estado == 1){
-        const alert = await this.alertController.create({
-          header: "Iniciar Atención!",
-          message: "Desea iniciar la atención de " + nombre + "?",
-          mode: "ios",
-          cssClass: "css_alert",
-          buttons: [
-            {
-              text: "No",
-              role: "cancel",
-              cssClass: "secondary",
-              handler: (blah) => {
-                console.log("Confirm Cancel: blah");
-              },
-            },
-            {
-              text: "Si",
-              handler: () => {
-                this. gestionarTurno(tipoBoton, agencia, estado, numIde, nombre);
-              },
-            },
-          ],
-        });
-        await alert.present();
-      }else if(tipoBoton === 1 && estado == 0){
-        const alert = await this.alertController.create({
-          header: "Registrar Llegada!",
-          message: "Desea registrar la llegada de " + nombre + "?",
-          mode: "ios",
-          cssClass: "css_alert",
-          buttons: [
-            {
-              text: "No",
-              role: "cancel",
-              cssClass: "secondary",
-              handler: (blah) => {
-                console.log("Confirm Cancel: blah");
-              },
-            },
-            {
-              text: "Si",
-              handler: () => {
-                this. gestionarTurno(tipoBoton, agencia, estado, numIde, nombre);
-              },
-            },
-          ],
-        });
-        await alert.present();
-      }else if(tipoBoton === 1 && estado == 2 || estado == 3){
-        const alert = await this.alertController.create({
-          header: "Iniciar espera!",
-          message: "Desea ingresar en la cola de espera a " + nombre + "?",
-          mode: "ios",
-          cssClass: "css_alert",
-          buttons: [
-            {
-              text: "No",
-              role: "cancel",
-              cssClass: "secondary",
-              handler: (blah) => {
-                console.log("Confirm Cancel: blah");
-              },
-            },
-            {
-              text: "Si",
-              handler: () => {
-                this. gestionarTurno(tipoBoton, agencia, estado, numIde, nombre);
-              },
-            },
-          ],
-        });
-        await alert.present();
-      }else if(tipoBoton === 1 && estado == null){
-        const alert = await this.alertController.create({
-          header: "Registrar Llegada!",
-          message: "Desea registrar la llegada de " + nombre + "?",
-          mode: "ios",
-          cssClass: "css_alert",
-          buttons: [
-            {
-              text: "No",
-              role: "cancel",
-              cssClass: "secondary",
-              handler: (blah) => {
-                console.log("Confirm Cancel: blah");
-              },
-            },
-            {
-              text: "Si",
-              handler: () => {
-                this. gestionarTurno(tipoBoton, agencia, estado, numIde, nombre);
-              },
-            },
-          ],
-        });
-        await alert.present();
+  async gestionarTurno(tipoBoton, agencia, estado, numIde, nombre) {
+    //aqui va el código que actualiza los turnos
+    if (tipoBoton == 0 && estado == 1) {
+      estado = 'HIBERNAR';
+    } else if (tipoBoton == 1) {
+      if (estado == null) {
+        estado = 'TURNO';
+      }
+      if (estado == 0) {
+        estado = 'TURNO';
+      }
+      if (estado == 1) {
+        estado = 'ATENCION';
+      }
+      if (estado == 2) {
+        estado = 'TURNO';
+      }
+      if (estado == 3) {
+        estado = 'TURNO';
       }
     }
 
-    async PopoverMenu(ev: any) {
-      const popover = await this.popoverController.create({
-        
-        component: this.rol ? MenuAdminComponent : MenuRegistroComponent,
-        event: ev
+    this.httpTurnador.gestionarTurno(agencia, estado, numIde).subscribe(
+      (respuesta) => {
+        this.nombres = respuesta;
+        console.log('Turno gestionado');
+        this.getVendedores();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    //traigo nuevamente los vendedores y sus posiciones
+  }
+
+  async iniciarTurno(tipoBoton, agencia, estado, numIde, nombre) {
+    if (tipoBoton === 0 && estado == 1) {
+      const alert = await this.alertController.create({
+        header: 'Iniciar Hibernación!',
+        message: 'Desea hibernar a ' + nombre + '?',
+        mode: 'ios',
+        cssClass: 'css_alert',
+        buttons: [
+          {
+            text: 'No',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('Confirm Cancel: blah');
+            },
+          },
+          {
+            text: 'Si',
+            handler: () => {
+              this.gestionarTurno(tipoBoton, agencia, estado, numIde, nombre);
+            },
+          },
+        ],
       });
-      return await popover.present();
+      await alert.present();
+    } else if (tipoBoton === 1 && estado == 1) {
+      const alert = await this.alertController.create({
+        header: 'Iniciar Atención!',
+        message: 'Desea iniciar la atención de ' + nombre + '?',
+        mode: 'ios',
+        cssClass: 'css_alert',
+        buttons: [
+          {
+            text: 'No',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('Confirm Cancel: blah');
+            },
+          },
+          {
+            text: 'Si',
+            handler: () => {
+              this.gestionarTurno(tipoBoton, agencia, estado, numIde, nombre);
+            },
+          },
+        ],
+      });
+      await alert.present();
+    } else if (tipoBoton === 1 && estado == 0) {
+      const alert = await this.alertController.create({
+        header: 'Registrar Llegada!',
+        message: 'Desea registrar la llegada de ' + nombre + '?',
+        mode: 'ios',
+        cssClass: 'css_alert',
+        buttons: [
+          {
+            text: 'No',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('Confirm Cancel: blah');
+            },
+          },
+          {
+            text: 'Si',
+            handler: () => {
+              this.gestionarTurno(tipoBoton, agencia, estado, numIde, nombre);
+            },
+          },
+        ],
+      });
+      await alert.present();
+    } else if ((tipoBoton === 1 && estado == 2) || estado == 3) {
+      const alert = await this.alertController.create({
+        header: 'Iniciar espera!',
+        message: 'Desea ingresar en la cola de espera a ' + nombre + '?',
+        mode: 'ios',
+        cssClass: 'css_alert',
+        buttons: [
+          {
+            text: 'No',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('Confirm Cancel: blah');
+            },
+          },
+          {
+            text: 'Si',
+            handler: () => {
+              this.gestionarTurno(tipoBoton, agencia, estado, numIde, nombre);
+            },
+          },
+        ],
+      });
+      await alert.present();
+    } else if (tipoBoton === 1 && estado == null) {
+      const alert = await this.alertController.create({
+        header: 'Registrar Llegada!',
+        message: 'Desea registrar la llegada de ' + nombre + '?',
+        mode: 'ios',
+        cssClass: 'css_alert',
+        buttons: [
+          {
+            text: 'No',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('Confirm Cancel: blah');
+            },
+          },
+          {
+            text: 'Si',
+            handler: () => {
+              this.gestionarTurno(tipoBoton, agencia, estado, numIde, nombre);
+            },
+          },
+        ],
+      });
+      await alert.present();
     }
+  }
 
+  async PopoverMenu(ev: any) {
+    const popover = await this.popoverController.create({
+      component: this.rol ? MenuAdminComponent : MenuRegistroComponent,
+      event: ev,
+    });
+    return await popover.present();
+  }
+
+  openModal() {
+    this.isModalOpen = true;
+    
+  }
+
+  dismissModal() {
+    this.isModalOpen = false;
+  }
 }

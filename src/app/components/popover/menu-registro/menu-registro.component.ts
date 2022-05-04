@@ -18,6 +18,7 @@ export class MenuRegistroComponent implements OnInit {
     public alertController: AlertController,
     private toastController: ToastController,
     private httpLogin: LoginService,
+
   ) { }
 
   ngOnInit() {}
@@ -28,8 +29,9 @@ export class MenuRegistroComponent implements OnInit {
         console.log("Logout");
         //this.authService.logout();
         this.menuCtrl.close();
-        this.nav.navigateRoot("");
       }
     )
   }
+ 
+
 }

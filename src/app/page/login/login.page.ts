@@ -13,7 +13,7 @@ export class LoginPage implements OnInit {
 
   rolSemaforista: boolean = false;
   user: User = new User();
-  logueo: boolean;
+  token: string;
   constructor(
     public toastController: ToastController,
     public loadingController: LoadingController,
@@ -21,7 +21,7 @@ export class LoginPage implements OnInit {
     public nav: NavController,
     private platform: Platform,
     public globals: Globals) {
-     this.logueo = this.globals.getLogueado();
+     this.token = this.globals.getToken();
    }
 
   ionViewWillEnter() {
@@ -35,7 +35,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     //this.getUser();
-     if(this.logueo == true){
+     if(this.token != null){
       this.nav.navigateRoot('/tabs/tab2');
      }else{
       this.nav.navigateRoot('');
@@ -78,12 +78,12 @@ export class LoginPage implements OnInit {
 
     this.httpLogin.login(user).subscribe(
       (res: any) => {
-        console.log(res)
         
         this.globals.agencia = res?.data?.usuario?.C_AGE_TRABAJO;
         this.globals.setAgencia(res?.data?.usuario?.C_AGE_TRABAJO);
         this.globals.setUsuarioApli(res?.data?.usuario?.USUARIO_APLICATIVO);
         this.globals.setToken(res?.token);
+        
         this.globals.setLogueado(true);
         if (res.success){
           let rol = res.data.roles.map(roles =>{

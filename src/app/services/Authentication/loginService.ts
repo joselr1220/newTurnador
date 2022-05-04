@@ -5,6 +5,7 @@ import { Observable, BehaviorSubject } from  'rxjs';
 
 import { EnvService } from '../env/env.service';
 import { Globals } from 'src/app/Globals/globals';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -17,7 +18,8 @@ export class LoginService {
   constructor(
     private  http: HttpClient, 
     private httpEnv: EnvService,
-    public globals: Globals
+    public globals: Globals,
+    private router: Router
   ) { }
 
   login(params) {
@@ -49,8 +51,9 @@ export class LoginService {
 
   async logout() { 
     //this.storage.remove("token");
-    this.globals.setLogueado(false);
-    delete this.token;
+    localStorage.removeItem('token');
+    this.router.navigate(['']);
+   
   }
 
   getToken() {
